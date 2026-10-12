@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LIFELINK – Organ donation & emergency registry</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<svg class="noise" aria-hidden="true"><title>Noise texture</title><filter id="n"><feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100%" height="100%" filter="url(#n)"/></svg>
+
+<nav><div class="wrap">
+  <a class="logo" href="#top">Life<b>Link</b></a>
+  <div class="links"><a href="#how">How it works</a><a href="#card">My card</a><a href="#hospital">Hospitals</a><a class="keep" href="#card">Register</a></div>
+</div></nav>
+
+<header class="hero" id="top"><div class="hero-bg" aria-hidden="true"></div><div class="wrap"><div class="hero-in" id="heroIn">
+  <h1>Scan me.<br><span>Save me.</span></h1>
+  <p>One QR code carries your blood group, allergies and emergency contacts to the people who find you first. Your organ pledge stays on record. Hospitals see the full file only when you approve.</p>
+  <div class="row"><a class="btn" href="#card">Build my card</a><button class="btn out" id="demoScan">See what a responder sees</button></div>
+</div></div></header>
+
+<div class="mq y" aria-hidden="true"><div class="track" id="mq1"></div></div>
+
+<section id="how"><div class="wrap">
+  <h2>Three steps.<br>Ninety seconds.</h2>
+  <p class="lead">Fill it in once. Keep the card in your phone case, wallet or on your lock screen.</p>
+  <div class="grid3">
+    <div class="cell"><span class="n" aria-hidden="true">01</span><h3>Fill your file</h3><p>Blood group, allergies, conditions, medicines and two people to call.</p></div>
+    <div class="cell"><span class="n" aria-hidden="true">02</span><h3>Pledge or pass</h3><p>Choose which organs you are willing to donate. Change your mind any time.</p></div>
+    <div class="cell"><span class="n" aria-hidden="true">03</span><h3>Carry the code</h3><p>Anyone can scan the critical facts. Hospitals must ask, and you decide.</p></div>
+  </div>
+</div></section>
+
+<section id="card" class="card-sec"><div class="card-bg" aria-hidden="true"></div><div class="wrap">
+  <h2>Build your<br>card</h2>
+  <p class="lead">The QR holds only what a paramedic needs in the first five minutes. Everything else stays locked.</p>
+  <div class="build">
+    <form id="form" autocomplete="off" novalidate>
+      <div class="two">
+        <div class="field"><label class="l" for="fName">Full name</label><input id="fName" type="text" placeholder="Your name" maxlength="40"></div>
+        <div class="field"><label class="l" for="fDob">Date of birth</label><input id="fDob" type="date"></div>
+      </div>
+      <div class="field"><label class="l" id="bl">Blood group</label><div class="chips" id="blood" role="radiogroup" aria-labelledby="bl"></div></div>
+      <div class="field"><label class="l" for="fAll">Allergies</label><input id="fAll" type="text" placeholder="Penicillin, peanuts" maxlength="60"></div>
+      <div class="field"><label class="l" for="fCond">Medical conditions</label><input id="fCond" type="text" placeholder="Diabetes, asthma" maxlength="60"></div>
+      <div class="field"><label class="l" for="fMeds">Regular medicines</label><input id="fMeds" type="text" placeholder="Insulin, aspirin" maxlength="60"></div>
+      <div class="sec"><h3>Organ pledge</h3>
+        <div class="chips" id="organs"></div>
+        <label class="check" style="margin-top:22px"><input type="checkbox" id="fFam"> <span>My family knows my wishes.</span></label>
+      </div>
+      <div class="sec"><h3>Emergency contacts</h3>
+        <div class="two"><div class="field"><label class="l" for="c1n">Contact 1 name</label><input id="c1n" type="text" placeholder="Name" maxlength="30"></div>
+        <div class="field"><label class="l" for="c1p">Phone</label><input id="c1p" type="tel" placeholder="+91 98400 00000" maxlength="18"></div></div>
+        <div class="two"><div class="field"><label class="l" for="c2n">Contact 2 name</label><input id="c2n" type="text" placeholder="Name" maxlength="30"></div>
+        <div class="field"><label class="l" for="c2p">Phone</label><input id="c2p" type="tel" placeholder="+91 98400 00000" maxlength="18"></div></div>
+      </div>
+      <div class="sec"><h3>Hospital access</h3>
+        <label class="check"><input type="checkbox" id="fAllow" checked> <span>Verified hospitals may request my full record. I approve each request myself.</span></label>
+      </div>
+      <button type="submit" class="btn" style="width:100%;height:80px;font-size:1.4rem">Save my card</button>
+    </form>
+
+    <aside class="sticky" aria-label="Card preview">
+      <div class="card">
+        <div class="top"><span>Emergency medical card</span><span id="pId">LL-DRAFT</span></div>
+        <div class="body"><div><div class="blood" id="pBlood">?</div><div class="cname" id="pName">Your name</div><small id="pSub">Age not set</small></div><div id="qr"></div></div>
+        <div class="foot" id="pTags"></div>
+      </div>
+      <p class="status" id="status">Draft. Not saved yet.</p>
+      <div class="row" style="margin-top:18px"><button class="btn sm" id="scanBtn" type="button">Test scan</button><a class="btn sm out" id="dl" download="lifelink-qr.png" href="#">Download QR</a><button class="btn sm out" type="button" onclick="window.print()">Print</button></div>
+    </aside>
+  </div>
+</div></section>
+
+<div class="mq slow" aria-hidden="true"><div class="track" id="mq2"></div></div>
+
+<section id="hospital"><div class="wrap">
+  <h2>Hospitals ask.<br>You decide.</h2>
+  <p class="lead">Try both sides of the handshake. Send a request as a hospital, then approve or deny it as the patient. Every action is logged.</p>
+  <div class="hosp">
+    <div class="pane">
+      <h3>Hospital side</h3><p class="mut">Request the full record of the card holder.</p>
+      <div class="field"><label class="l" for="hSel">Hospital</label><select id="hSel"><option>Apollo City Hospital</option><option>Government General Hospital</option><option>St. Mary's Trauma Centre</option></select></div>
+      <div class="field"><label class="l" for="hWhy">Reason</label><select id="hWhy"><option>Emergency admission</option><option>Surgery planning</option><option>Transplant matching</option></select></div>
+      <button class="btn" id="hReq" type="button">Request access</button>
+      <div style="margin-top:32px" id="hView"></div>
+    </div>
+    <div class="pane">
+      <h3>Patient side</h3><p class="mut">Requests waiting for your decision.</p>
+      <div id="reqs"></div>
+      <div class="log" id="log" aria-live="polite"></div>
+    </div>
+  </div>
+</div></section>
+
+<div class="mq y" aria-hidden="true" style="border-bottom:0"><div class="track" id="mq3"></div></div>
+
+<footer><div class="wrap">
+  <p class="up" style="font-weight:700;font-size:1.2rem">Become a donor. Wear your wishes.</p>
+  <div class="giant" aria-hidden="true">LifeLink</div>
+  <p>Prototype for demonstration. Your data stays in this browser and is never uploaded. A real deployment needs hospital verification, encryption and legal consent flows. Not a substitute for official donor registration.</p>
+</div></footer>
+
+<div id="scan" role="dialog" aria-modal="true" aria-label="Responder view"><div class="scan-in" id="scanIn"></div></div>
+<div id="toast" aria-live="polite"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
